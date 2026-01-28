@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just for You 💗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink1:#ff7eb3;
+  --pink2:#ff4d8d;
+  --bg:#12000a;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(circle at top, rgba(255,126,179,.35), transparent 40%),
+    radial-gradient(circle at bottom, rgba(255,77,141,.35), transparent 40%),
+    var(--bg);
+  color:white;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  animation:fadeIn 1.2s ease;
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  color:var(--pink1);
+  font-size:52px;
+  margin-bottom:10px;
+  text-shadow:0 0 25px rgba(255,126,179,.6);
+}
+
+p{
+  opacity:.9;
+  max-width:340px;
+  margin:0 auto 30px;
+}
+
+button{
+  padding:14px 36px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  background:linear-gradient(135deg,var(--pink1),var(--pink2));
+  color:white;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,126,179,.6);
+}
+
+.card{
+  width:330px;
+  padding:30px;
+  border-radius:24px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);
+  box-shadow:0 0 40px rgba(255,126,179,.45);
+  text-align:center;
+}
+
+.progress{
+  height:10px;
+  background:#2a0016;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--pink1),var(--pink2));
+}
+
+.percent{
+  font-size:42px;
+  color:var(--pink1);
+  font-weight:600;
+}
+
+.heartBtn{
+  background:rgba(255,126,179,.15);
+  padding:16px;
+  margin:12px auto;
+  border-radius:30px;
+  width:300px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.note{
+  max-width:360px;
+  line-height:1.6;
+  font-size:15px;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<div class="container" id="screen1">
+  <h1>How pretty are you?</h1>
+  <p>Tap gently to open my heart 💗</p>
+  <button onclick="startLoading()">Open My Heart</button>
+</div>
+
+<script>
+function startLoading(){
+  document.body.innerHTML=`
+    <div class="card">
+      <p>Measuring your cuteness…</p>
+      <div class="percent" id="count">0%</div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+    </div>
+  `;
+  let p=0;
+  const bar=document.getElementById("bar");
+  const count=document.getElementById("count");
+  const i=setInterval(()=>{
+    p+=10;
+    bar.style.width=(p/10)+"%";
+    count.innerText=p+"%";
+    if(p>=1000){clearInterval(i);setTimeout(showHearts,700);}
+  },60);
+}
+
+function showHearts(){
+  document.body.innerHTML=`
+    <div class="container">
+      <h1>Just for Hetsi</h1>
+      <p>Tap each heart 🤍</p>
+      <div id="list"></div>
+      <p id="more" style="opacity:.6;display:none">See more ↓</p>
+    </div>
+  `;
+  const msgs=[
+    "Your eyes are so pretty ✨",
+    "Your smile is so beautiful 🤍",
+    "Your pyaari pyaari baatein 💫",
+    "Your happiness is my happiness 🌸",
+    "Your eyes make me lost in them 🌙",
+    "Your expressions are truly special 💗"
+  ];
+  const list=document.getElementById("list");
+  msgs.forEach((t,i)=>{
+    const d=document.createElement("div");
+    d.className="heartBtn";
+    d.innerText="🤍 Tap";
+    d.onclick=()=>{
+      d.innerText=t;
+      d.style.background="linear-gradient(135deg,#ff7eb3,#ff4d8d)";
+      d.onclick=null;
+      if(i===msgs.length-1) document.getElementById("more").style.display="block";
+    };
+    list.appendChild(d);
+  });
+  document.getElementById("more").onclick=showNote;
+}
+
+function showNote(){
+  document.body.innerHTML=`
+    <div class="card note">
+      <h1 style="font-size:38px">A little note for you</h1>
+      <p>
+      I just wanted to tell you that you are truly very special to me — not just as a friend, but as a human being. You have always cared for me, stood by me in every situation, and never made me feel alone. That itself means more than words can explain.<br><br>
+      The way your hair moves softly in the air, your eyes, your smile, and your expressions — all of it makes you effortlessly adorable. Your heart is soft, kind, and beautiful, just like you. There’s something very unique and deeply comforting about you.
+      </p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
