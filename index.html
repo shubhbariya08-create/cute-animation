@@ -31,24 +31,16 @@ body{
   overflow:hidden;
 }
 
-.container{
-  text-align:center;
-  animation:fadeIn 1.2s ease;
-}
+.container{text-align:center;animation:fadeIn 1.2s ease}
 
 h1{
   font-family:'Pacifico',cursive;
   color:var(--pink1);
-  font-size:52px;
-  margin-bottom:10px;
+  font-size:48px;
   text-shadow:0 0 25px rgba(255,126,179,.6);
 }
 
-p{
-  opacity:.9;
-  max-width:340px;
-  margin:0 auto 30px;
-}
+p{opacity:.9;max-width:360px;margin:15px auto}
 
 button{
   padding:14px 36px;
@@ -62,12 +54,12 @@ button{
 }
 
 .card{
-  width:330px;
+  width:340px;
   padding:30px;
   border-radius:24px;
-  background:rgba(255,255,255,.04);
-  backdrop-filter:blur(8px);
-  box-shadow:0 0 40px rgba(255,126,179,.45);
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 45px rgba(255,126,179,.5);
   text-align:center;
 }
 
@@ -78,18 +70,12 @@ button{
   overflow:hidden;
   margin:15px 0;
 }
-
 .bar{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--pink1),var(--pink2));
 }
-
-.percent{
-  font-size:42px;
-  color:var(--pink1);
-  font-weight:600;
-}
+.percent{font-size:42px;color:var(--pink1)}
 
 .heartBtn{
   background:rgba(255,126,179,.15);
@@ -101,44 +87,51 @@ button{
   transition:.3s;
 }
 
-.note{
-  max-width:360px;
-  line-height:1.6;
-  font-size:15px;
+.pinkHeart{
+  width:70px;height:70px;border-radius:50%;
+  background:rgba(255,126,179,.25);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 15px;
+  font-size:30px;
+  box-shadow:0 0 35px rgba(255,126,179,.9);
+  animation:pulse 1.6s infinite;
 }
 
+.note{line-height:1.6;font-size:15px}
+
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px)}
-  to{opacity:1; transform:translateY(0)}
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SCREEN 1 -->
-<div class="container" id="screen1">
+<div class="container">
   <h1>How pretty are you?</h1>
   <p>Tap gently to open my heart 💗</p>
-  <button onclick="startLoading()">Open My Heart</button>
+  <button onclick="start()">Open My Heart</button>
 </div>
 
 <script>
-function startLoading(){
+function start(){
   document.body.innerHTML=`
     <div class="card">
       <p>Measuring your cuteness…</p>
       <div class="percent" id="count">0%</div>
       <div class="progress"><div class="bar" id="bar"></div></div>
-    </div>
-  `;
+    </div>`;
   let p=0;
   const bar=document.getElementById("bar");
   const count=document.getElementById("count");
   const i=setInterval(()=>{
-    p+=10;
-    bar.style.width=(p/10)+"%";
-    count.innerText=p+"%";
+    p+=10;bar.style.width=(p/10)+"%";count.innerText=p+"%";
     if(p>=1000){clearInterval(i);setTimeout(showHearts,700);}
   },60);
 }
@@ -150,8 +143,7 @@ function showHearts(){
       <p>Tap each heart 🤍</p>
       <div id="list"></div>
       <p id="more" style="opacity:.6;display:none">See more ↓</p>
-    </div>
-  `;
+    </div>`;
   const msgs=[
     "Your eyes are so pretty ✨",
     "Your smile is so beautiful 🤍",
@@ -163,8 +155,7 @@ function showHearts(){
   const list=document.getElementById("list");
   msgs.forEach((t,i)=>{
     const d=document.createElement("div");
-    d.className="heartBtn";
-    d.innerText="🤍 Tap";
+    d.className="heartBtn";d.innerText="🤍 Tap";
     d.onclick=()=>{
       d.innerText=t;
       d.style.background="linear-gradient(135deg,#ff7eb3,#ff4d8d)";
@@ -173,21 +164,34 @@ function showHearts(){
     };
     list.appendChild(d);
   });
-  document.getElementById("more").onclick=showNote;
+  document.getElementById("more").onclick=showLetter;
 }
 
-function showNote(){
+function showLetter(){
+  document.body.innerHTML=`
+    <div class="container">
+      <h1>A little note for you</h1>
+      <div class="card" onclick="openNote()" style="cursor:pointer">
+        <div class="pinkHeart">💗</div>
+        <p>Tap to open</p>
+      </div>
+    </div>`;
+}
+
+function openNote(){
   document.body.innerHTML=`
     <div class="card note">
-      <h1 style="font-size:38px">A little note for you</h1>
+      <h1>Dear Hetsi 💖✨</h1>
       <p>
       I just wanted to tell you that you are truly very special to me — not just as a friend, but as a human being. You have always cared for me, stood by me in every situation, and never made me feel alone. That itself means more than words can explain.<br><br>
       The way your hair moves softly in the air, your eyes, your smile, and your expressions — all of it makes you effortlessly adorable. Your heart is soft, kind, and beautiful, just like you. There’s something very unique and deeply comforting about you.
       </p>
-    </div>
-  `;
+    </div>`;
 }
 </script>
 
 </body>
 </html>
+
+
+    
